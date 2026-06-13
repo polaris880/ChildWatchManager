@@ -8,12 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.childwatch.manager.utils.ConfigManager;
-import com.childwatch.manager.utils.TimeManager;
 
 public class ReportActivity extends AppCompatActivity {
 
     private ConfigManager configManager;
-    private TimeManager timeManager;
 
     private TextView tvTodayDuration, tvTodayCount, tvTodayRest;
     private TextView tvWeekDuration, tvWeekAverage, tvWeekReward;
@@ -26,7 +24,6 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         configManager = ConfigManager.getInstance(this);
-        timeManager = TimeManager.getInstance(this);
 
         initViews();
         loadReportData();
@@ -48,35 +45,47 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void loadReportData() {
-        // 今日统计
-        long todaySeconds = configManager.getTodayTotalSeconds();
-        int todayCount = configManager.getTodaySessionCount();
-        int todayRest = configManager.getTodayRestCount();
+        try {
+            // 今日统计
+            long todaySeconds = configManager.getTodayTotalSeconds();
+            int todayCount = configManager.getTodaySessionCount();
+            int todayRest = configManager.getTodayRestCount();
 
-        tvTodayDuration.setText(formatMinutes(todaySeconds / 60));
-        tvTodayCount.setText(todayCount + "次");
-        tvTodayRest.setText(todayRest + "次");
+            tvTodayDuration.setText(formatMinutes(todaySeconds / 60));
+            tvTodayCount.setText(todayCount + "次");
+            tvTodayRest.setText(todayRest + "次");
 
-        // 本周统计
-        long weekSeconds = configManager.getWeekTotalSeconds();
-        long weekDays = configManager.getWeekDays();
-        int weekReward = configManager.getWeekRewardUsed();
+            // 本周统计
+            long weekSeconds = configManager.getWeekTotalSeconds();
+            long weekDays = configManager.getWeekDays();
+            int weekReward = configManager.getWeekRewardUsed();
 
-        tvWeekDuration.setText(formatMinutes(weekSeconds / 60));
-        if (weekDays > 0) {
-            tvWeekAverage.setText(formatMinutes((weekSeconds / 60) / weekDays));
-        } else {
+            tvWeekDuration.setText(formatMinutes(weekSeconds / 60));
+            if (weekDays > 0) {
+                tvWeekAverage.setText(formatMinutes((weekSeconds / 60) / weekDays));
+            } else {
+                tvWeekAverage.setText("0分钟");
+            }
+            tvWeekReward.setText(weekReward + "分钟");
+
+            // 习惯评估
+            generateEvaluation(todaySeconds);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 显示默认值
+            tvTodayDuration.setText("0分钟");
+            tvTodayCount.setText("0次");
+            tvTodayRest.setText("0次");
+            tvWeekDuration.setText("0分钟");
             tvWeekAverage.setText("0分钟");
+            tvWeekReward.setText("0分钟");
+            tvEvaluation.setText("暂无数据");
+            tvSuggestion.setText("开始使用后可查看报告");
         }
-        tvWeekReward.setText(weekReward + "分钟");
-
-        // 习惯评估
-        generateEvaluation(todaySeconds, weekSeconds);
     }
 
-    private void generateEvaluation(long todaySeconds, long weekSeconds) {
+    private void generateEvaluation(long todaySeconds) {
         long todayMinutes = todaySeconds / 60;
-        long weekMinutes = weekSeconds / 60;
 
         if (todayMinutes <= 60) {
             tvEvaluation.setText("👍 今日观看时间控制良好！");

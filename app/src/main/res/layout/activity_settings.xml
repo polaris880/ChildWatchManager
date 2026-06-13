@@ -69,9 +69,7 @@
                 android:textColor="@color/text_primary"
                 android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_workday_minus"
-                android:nextFocusRight="@id/btn_workday_plus" />
+                android:focusable="false" />
 
             <Button
                 android:id="@+id/btn_workday_plus"
@@ -121,9 +119,7 @@
                 android:textColor="@color/text_primary"
                 android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_weekend_minus"
-                android:nextFocusRight="@id/btn_weekend_plus" />
+                android:focusable="false" />
 
             <Button
                 android:id="@+id/btn_weekend_plus"
@@ -190,9 +186,7 @@
                 android:textColor="@color/text_primary"
                 android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_single_minus"
-                android:nextFocusRight="@id/btn_single_plus" />
+                android:focusable="false" />
 
             <Button
                 android:id="@+id/btn_single_plus"
@@ -260,9 +254,7 @@
                 android:textColor="@color/text_primary"
                 android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_interval_watch_minus"
-                android:nextFocusRight="@id/btn_interval_watch_plus" />
+                android:focusable="false" />
 
             <Button
                 android:id="@+id/btn_interval_watch_plus"
@@ -312,9 +304,7 @@
                 android:textColor="@color/text_primary"
                 android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:focusable="true"
-                android:nextFocusLeft="@id/btn_interval_rest_minus"
-                android:nextFocusRight="@id/btn_interval_rest_plus" />
+                android:focusable="false" />
 
             <Button
                 android:id="@+id/btn_interval_rest_plus"

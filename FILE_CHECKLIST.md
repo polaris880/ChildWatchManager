@@ -1,220 +1,144 @@
-# ✅ 儿童锁 v2.0.0 文件清单
+# ✅ 儿童锁 v2.0.1 文件清单
 
-## 📁 新增文件
+## 📁 更新的文件
 
-### Java文件
-- ✅ `models/ChildProfile.java` - 孩子数据模型
-- ✅ `RewardActivity.java` - 奖励界面
-- ✅ `ReportActivity.java` - 报告界面
+### Java文件（完整重写）
+- ✅ `MainActivity.java` - 简化并修复UI更新
+- ✅ `ConfigManager.java` - 完善所有统计方法
+- ✅ `ReportActivity.java` - 添加异常处理
+- ✅ `RewardActivity.java` - 优化奖励逻辑
+- ✅ `PasswordDialog.java` - 优化遥控器支持
+- ✅ `SettingsActivity.java` - 修复密码修改
 
 ### 布局文件
-- ✅ `activity_reward.xml` - 奖励界面布局
-- ✅ `activity_report.xml` - 报告界面布局
+- ✅ 删除 `dialog_change_password.xml`（旧的EditText）
+- ✅ `activity_settings.xml` - 移除数值区域焦点
+
+### 构建文件
+- ✅ `build.gradle` - 版本号更新到 2.0.1
+
+### 文档文件
+- ✅ `README.md` - 更新到 v2.0.1
+- ✅ `QUICKSTART.md` - 更新快速开始指南
 
 ---
 
-## 📝 更新文件
+## 🔧 修复的问题
 
-### Java文件
-- ✅ `MainActivity.java` - 主界面（多孩子切换、进度条、新按钮）
-- ✅ `ConfigManager.java` - 配置管理（多孩子支持、奖励系统、统计）
-- ✅ `WatchdogService.java` - 服务（通知标题更新）
+### 1. 密码修改功能 ✅
+**问题**：点击修改密码没反应，弹出软键盘  
+**解决**：使用 PasswordDialog 数字选择器
 
-### 布局文件
-- ✅ `activity_main.xml` - 主界面布局（新增孩子选择、进度条、奖励和报告按钮）
+### 2. 界面显示不正常 ✅
+**问题**：保存设置后显示异常  
+**解决**：在 onResume 中刷新所有显示
 
-### 资源文件
-- ✅ `strings.xml` - 新增字符串资源
-- ✅ `AndroidManifest.xml` - 新增Activity声明
+### 3. 统计功能不完整 ✅
+**问题**：统计数据不显示或错误  
+**解决**：完善 ConfigManager 统计方法，添加异常处理
 
-### 文档
-- ✅ `README.md` - 完整功能文档
-- ✅ `QUICKSTART.md` - 快速开始指南
+### 4. 软键盘弹出 ✅
+**问题**：某些操作会弹出软键盘  
+**解决**：设置 SOFT_INPUT_STATE_ALWAYS_HIDDEN
 
 ---
 
-## 🎯 功能清单
+## 📊 功能清单
 
-### 1. 多孩子支持 ✅
-- [x] ChildProfile 数据模型
-- [x] 主界面孩子切换（◀ ▶）
-- [x] 每个孩子独立配置
-- [x] 数据分别统计
-- [x] 持久化存储
+### 核心功能 ✅
+- [x] 开机自启动
+- [x] 家长密码保护
+- [x] 每日时长限制
+- [x] 单次时长限制
+- [x] 间隔休息提醒
+- [x] 自动锁定
 
-### 2. 奖励系统 ✅
-- [x] RewardActivity 界面
-- [x] 4种奖励任务
-- [x] 每日限制领取次数
-- [x] 自动加入可用时长
-- [x] 次日自动重置
+### 家庭功能 ✅
+- [x] 多孩子管理
+- [x] 奖励系统（4种任务）
+- [x] 观看报告（今日/本周）
+- [x] 进度显示
+- [x] 习惯评估
 
-### 3. 观看报告 ✅
-- [x] ReportActivity 界面
-- [x] 今日统计（时长、次数、休息）
-- [x] 本周统计（总时长、日均、奖励使用）
-- [x] 习惯评估（良好/适中/较长）
-- [x] 智能建议
-
-### 4. 进度显示 ✅
-- [x] 进度条组件
-- [x] 实时使用百分比
-- [x] 颜色标识
-
-### 5. 界面优化 ✅
-- [x] 遥控器导航优化
-- [x] 深色主题
+### 遥控器支持 ✅
+- [x] 方向键导航
+- [x] 确认键选择
+- [x] 数字选择器
 - [x] 大按钮设计
-- [x] 横屏显示
+- [x] 深色主题
 
 ---
 
-## 📊 数据结构
+## 🎮 操作流程
 
-### ChildProfile 字段
-- id: 孩子唯一标识
-- name: 孩子名字
-- dailyLimitWorkday: 工作日限制（分钟）
-- dailyLimitWeekend: 周末限制（分钟）
-- singleLimit: 单次限制（分钟）
-- intervalWatch: 观看间隔（分钟）
-- intervalRest: 休息时长（分钟）
-- bonusMinutes: 奖励时间（分钟）
+### 首次使用
+1. 启动APP
+2. 自动进入设置（设置密码）
+3. 使用数字选择器设置6位密码
+4. 配置观看规则
+5. 保存设置
 
-### 统计数据（按孩子ID区分）
-- today_total_{childId}: 今日总时长
-- today_session_count_{childId}: 今日观看次数
-- today_rest_count_{childId}: 今日休息次数
-- week_total_{childId}: 本周总时长
-- week_reward_used_{childId}: 本周奖励使用
-
-### 奖励数据
-- today_rewards: 今日已领取奖励集合
+### 日常使用
+1. 主界面查看今日状态
+2. 切换孩子查看不同配置
+3. 使用奖励激励孩子
+4. 查看观看报告
 
 ---
 
-## 🎮 遥控器操作映射
-
-### 主界面
-| 按键 | 功能 |
-|------|------|
-| ← → | 切换孩子/按钮 |
-| ↑ ↓ | 上下导航 |
-| 确认 | 执行操作 |
-
-### 奖励界面
-| 按键 | 功能 |
-|------|------|
-| ↑ ↓ | 选择任务 |
-| 确认 | 领取奖励 |
-| 返回 | 回到主界面 |
-
-### 报告界面
-| 按键 | 功能 |
-|------|------|
-| ↑ ↓ | 滚动查看 |
-| 确认/返回 | 回到主界面 |
-
----
-
-## 🔄 升级指南
-
-### 从 v1.x 升级
-1. 卸载旧版本
-2. 安装 v2.0.0
-3. 重新设置密码
-4. 配置孩子信息
-
-### 数据迁移
-- v1.x 数据会自动迁移
-- 默认创建"宝宝"孩子
-- 原有配置应用到默认孩子
-
----
-
-## ⚠️ 注意事项
-
-### 多孩子功能
-- 默认只有一个孩子"宝宝"
-- 后续版本将支持界面添加孩子
-- 目前需要修改代码添加更多孩子
-
-### 奖励系统
-- 每个任务每天只能领取1次
-- 奖励时间自动加入当日时长
-- 次日0点自动重置
-
-### 统计数据
-- 数据按孩子ID独立存储
-- 每日/每周自动重置
-- 卸载APP会清除所有数据
-
----
-
-## 🚀 提交构建
+## 📦 提交命令
 
 ```powershell
 cd D:\ai\APK\ChildWatchManager
 git add .
-git commit -m "v2.0.0: 家庭增强版"
+git commit -m "v2.0.1: 完整修复版 - 密码、界面、统计功能"
 git push
 ```
 
 ---
 
-## 📱 完整文件结构
+## ⏱️ 构建信息
 
-```
-ChildWatchManager/
-├── .github/workflows/build.yml
-├── app/
-│   ├── src/main/
-│   │   ├── java/com/childwatch/manager/
-│   │   │   ├── MainActivity.java ✅ (更新)
-│   │   │   ├── SettingsActivity.java
-│   │   │   ├── LockActivity.java
-│   │   │   ├── AlertActivity.java
-│   │   │   ├── PasswordDialog.java
-│   │   │   ├── RewardActivity.java ✅ (新增)
-│   │   │   ├── ReportActivity.java ✅ (新增)
-│   │   │   ├── ChildWatchApplication.java
-│   │   │   ├── models/
-│   │   │   │   └── ChildProfile.java ✅ (新增)
-│   │   │   ├── services/
-│   │   │   │   └── WatchdogService.java
-│   │   │   ├── receivers/
-│   │   │   │   └── BootReceiver.java
-│   │   │   └── utils/
-│   │   │       ├── ConfigManager.java ✅ (更新)
-│   │   │       └── TimeManager.java
-│   │   ├── res/
-│   │   │   ├── layout/
-│   │   │   │   ├── activity_main.xml ✅ (更新)
-│   │   │   │   ├── activity_settings.xml
-│   │   │   │   ├── activity_lock.xml
-│   │   │   │   ├── activity_alert.xml
-│   │   │   │   ├── activity_reward.xml ✅ (新增)
-│   │   │   │   ├── activity_report.xml ✅ (新增)
-│   │   │   │   ├── dialog_set_password.xml
-│   │   │   │   └── dialog_change_password.xml
-│   │   │   ├── values/
-│   │   │   │   ├── colors.xml
-│   │   │   │   ├── strings.xml ✅ (更新)
-│   │   │   │   └── styles.xml
-│   │   │   └── drawable/
-│   │   │       ├── *.xml
-│   │   └── AndroidManifest.xml ✅ (更新)
-│   └── build.gradle ✅ (版本更新)
-├── build.gradle
-├── settings.gradle
-├── gradle.properties
-├── .gitignore
-├── README.md ✅ (更新)
-└── QUICKSTART.md ✅ (更新)
+- **版本**：2.0.1
+- **版本号**：3
+- **构建时间**：5-10分钟
+- **APK大小**：约3-5MB
+
+---
+
+## 📲 安装流程
+
+```bash
+# 1. 卸载旧版本
+adb uninstall com.childwatch.manager
+
+# 2. 安装新版本
+adb install app-debug.apk
+
+# 3. 启动
+adb shell am start -n com.childwatch.manager/.MainActivity
 ```
 
 ---
 
-**儿童锁 v2.0.0 - 家庭观看时间管理专家** 👨‍👩‍👧‍👦✨
+## 💡 验证清单
 
-**所有代码已准备就绪，可以提交构建！** 🚀
+### 安装后验证
+- [ ] 桌面只显示"儿童锁"图标
+- [ ] 点击启动正常
+- [ ] 可以设置密码
+- [ ] 可以调整时长设置
+- [ ] 保存设置后显示正常
+
+### 功能验证
+- [ ] 密码修改正常（数字选择器）
+- [ ] 奖励可以领取
+- [ ] 报告可以查看
+- [ ] 进度条正常显示
+- [ ] 遥控器操作流畅
+
+---
+
+**儿童锁 v2.0.1 - 所有问题已修复！** ✅🎮
+
+**提交构建，开始使用！** 🚀

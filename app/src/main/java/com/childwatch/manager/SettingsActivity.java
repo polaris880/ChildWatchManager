@@ -1,7 +1,8 @@
 package com.childwatch.manager;
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -51,11 +52,18 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // 禁用软键盘自动弹出
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         configManager = ConfigManager.getInstance(this);
 
         initViews();
         loadSettings();
         setupListeners();
+        setupNavigation();
+
+        // 设置初始焦点
+        btnWorkdayMinus.requestFocus();
     }
 
     private void initViews() {
@@ -186,11 +194,232 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        // 修改密码
-        btnChangePassword.setOnClickListener(v -> showPasswordDialog());
+        // 修改密码 - 使用数字选择器
+        btnChangePassword.setOnClickListener(v -> {
+            showPasswordDialog();
+        });
 
         // 保存设置
         btnSave.setOnClickListener(v -> saveSettings());
+    }
+
+    private void setupNavigation() {
+        // 工作日区域
+        btnWorkdayMinus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                btnWorkdayPlus.requestFocus();
+                return true;
+            } else if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                btnWeekendMinus.requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        btnWorkdayPlus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnWorkdayMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnWeekendPlus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 周末区域
+        btnWeekendMinus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnWeekendPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnWorkdayMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnSingleMinus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnWeekendPlus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnWeekendMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnWorkdayPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnSinglePlus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 单次限制区域
+        btnSingleMinus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnSinglePlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnWeekendMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnIntervalWatchMinus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnSinglePlus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnSingleMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnWeekendPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnIntervalWatchPlus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 观看间隔区域
+        btnIntervalWatchMinus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnIntervalWatchPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnSingleMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnIntervalRestMinus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnIntervalWatchPlus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnIntervalWatchMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnSinglePlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnIntervalRestPlus.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 休息时长区域
+        btnIntervalRestMinus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnIntervalRestPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnIntervalWatchMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    switchAutoStart.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnIntervalRestPlus.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnIntervalRestMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnIntervalWatchPlus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    switchMonitoring.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 开关区域
+        switchAutoStart.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    btnIntervalRestMinus.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    switchMonitoring.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    switchMonitoring.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        switchMonitoring.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    switchAutoStart.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    btnChangePassword.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    switchAutoStart.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // 按钮区域
+        btnChangePassword.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    switchMonitoring.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnSave.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnSave.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    switchMonitoring.requestFocus();
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnChangePassword.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     private void showPasswordDialog() {
@@ -215,5 +444,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         Toast.makeText(this, "设置已保存", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

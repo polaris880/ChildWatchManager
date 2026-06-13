@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPrevChild, btnNextChild;
     private Button btnSettings, btnReward, btnReport, btnStartStop;
 
-    private boolean isServiceRunning;
+    private boolean isServiceRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
         checkPasswordSetup();
-        startService();
+        startMonitoringService();
         startUIUpdate();
         updateChildDisplay();
     }
@@ -90,27 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        // 第一行按钮导航
-        btnPrevChild.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                btnNextChild.requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        btnNextChild.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                btnPrevChild.requestFocus();
-                return true;
-            } else if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                btnSettings.requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        // 第二行按钮导航
+        // 简化的导航设置
         btnSettings.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
@@ -132,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                     btnReport.requestFocus();
                     return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnNextChild.requestFocus();
-                    return true;
                 }
             }
             return false;
@@ -148,9 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                     btnStartStop.requestFocus();
                     return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnNextChild.requestFocus();
-                    return true;
                 }
             }
             return false;
@@ -160,9 +134,6 @@ public class MainActivity extends AppCompatActivity {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
                     btnReport.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnNextChild.requestFocus();
                     return true;
                 }
             }
@@ -180,11 +151,13 @@ public class MainActivity extends AppCompatActivity {
     private void switchToNextChild() {
         configManager.switchToNextChild();
         updateChildDisplay();
+        updateUI();
     }
 
     private void switchToPreviousChild() {
         configManager.switchToPreviousChild();
         updateChildDisplay();
+        updateUI();
     }
 
     private void updateChildDisplay() {
@@ -192,25 +165,33 @@ public class MainActivity extends AppCompatActivity {
         tvChildName.setText(child.getName());
     }
 
-    private void startService() {
-        Intent serviceIntent = new Intent(this, WatchdogService.class);
-        startForegroundService(serviceIntent);
-        isServiceRunning = true;
-        updateServiceButton();
+    private void startMonitoringService() {
+        try {
+            Intent serviceIntent = new Intent(this, WatchdogService.class);
+            startForegroundService(serviceIntent);
+            isServiceRunning = true;
+            updateServiceButton();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void stopService() {
-        Intent serviceIntent = new Intent(this, WatchdogService.class);
-        stopService(serviceIntent);
-        isServiceRunning = false;
-        updateServiceButton();
+    private void stopMonitoringService() {
+        try {
+            Intent serviceIntent = new Intent(this, WatchdogService.class);
+            stopService(serviceIntent);
+            isServiceRunning = false;
+            updateServiceButton();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void toggleService() {
         if (isServiceRunning) {
-            stopService();
+            stopMonitoringService();
         } else {
-            startService();
+            startMonitoringService();
         }
     }
 
@@ -252,28 +233,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        long todayTotal = timeManager.getTodayTotalSeconds();
-        long sessionSeconds = timeManager.getSessionSeconds();
-        long remaining = timeManager.getRemainingSeconds();
+        try {
+            // 获取今日总时长
+            long todayTotal = configManager.getTodayTotalSeconds();
+            long sessionSeconds = timeManager.getSessionSeconds();
+            long remaining = configManager.getDailyLimit(isWeekend() ? "weekend" : "workday") * 60L - todayTotal;
+            remaining = Math.max(0, remaining);
 
-        // 更新时间显示
-        tvTodayTotal.setText(TimeManager.formatTime(todayTotal));
-        tvSessionTime.setText(TimeManager.formatTime(sessionSeconds));
-        tvRemainingTime.setText(TimeManager.formatTime(remaining));
+            // 更新时间显示
+            tvTodayTotal.setText(TimeManager.formatTime(todayTotal));
+            tvSessionTime.setText(TimeManager.formatTime(sessionSeconds));
+            tvRemainingTime.setText(TimeManager.formatTime(remaining));
 
-        // 更新进度条
-        long dailyLimit = configManager.getDailyLimit(isWeekend() ? "weekend" : "workday") * 60L;
-        if (dailyLimit > 0) {
-            int progress = (int) (todayTotal * 100 / dailyLimit);
-            progress = Math.min(progress, 100);
-            progressTime.setProgress(progress);
-            tvProgressText.setText("已使用 " + progress + "%");
-        }
+            // 更新进度条
+            long dailyLimit = configManager.getDailyLimit(isWeekend() ? "weekend" : "workday") * 60L;
+            if (dailyLimit > 0) {
+                int progress = (int) (todayTotal * 100 / dailyLimit);
+                progress = Math.min(progress, 100);
+                progress = Math.max(0, progress);
+                progressTime.setProgress(progress);
+                tvProgressText.setText("已使用 " + progress + "%");
+            } else {
+                progressTime.setProgress(0);
+                tvProgressText.setText("已使用 0%");
+            }
 
-        // 更新状态
-        if (configManager.isLocked()) {
-            tvStatus.setText("● 已锁定");
-            tvStatus.setTextColor(getResources().getColor(R.color.error));
+            // 更新锁定状态
+            if (configManager.isLocked()) {
+                tvStatus.setText("● 已锁定");
+                tvStatus.setTextColor(getResources().getColor(R.color.error));
+            } else if (isServiceRunning) {
+                tvStatus.setText("● 监控中");
+                tvStatus.setTextColor(getResources().getColor(R.color.accent));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -286,8 +280,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        // 刷新所有显示
         updateChildDisplay();
+        updateUI();
+        updateServiceButton();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 可以在这里保存状态
     }
 
     @Override

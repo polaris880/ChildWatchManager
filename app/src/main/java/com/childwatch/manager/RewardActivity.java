@@ -48,6 +48,24 @@ public class RewardActivity extends AppCompatActivity {
         // 从配置加载今日已领取的奖励
         totalRewardMinutes = configManager.getTodayRewardMinutes();
         updateRewardDisplay();
+
+        // 检查哪些奖励已领取
+        if (configManager.hasClaimedRewardToday("homework")) {
+            btnHomework.setEnabled(false);
+            btnHomework.setText("已领取");
+        }
+        if (configManager.hasClaimedRewardToday("exercise")) {
+            btnExercise.setEnabled(false);
+            btnExercise.setText("已领取");
+        }
+        if (configManager.hasClaimedRewardToday("chores")) {
+            btnChores.setEnabled(false);
+            btnChores.setText("已领取");
+        }
+        if (configManager.hasClaimedRewardToday("reading")) {
+            btnReading.setEnabled(false);
+            btnReading.setText("已领取");
+        }
     }
 
     private void setupListeners() {
@@ -69,7 +87,6 @@ public class RewardActivity extends AppCompatActivity {
         }
 
         configManager.claimReward(type, minutes);
-        // claimReward 内部已调用 addBonusMinutes，无需重复调用
         totalRewardMinutes = configManager.getTodayRewardMinutes();
 
         updateRewardDisplay();

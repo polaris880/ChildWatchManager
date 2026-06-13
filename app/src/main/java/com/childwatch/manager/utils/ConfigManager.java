@@ -37,7 +37,6 @@ public class ConfigManager {
 
     // 奖励相关
     private static final String KEY_TODAY_REWARDS = "today_rewards";
-    private static final String KEY_BONUS_MINUTES = "bonus_minutes";
 
     private static ConfigManager instance;
     private SharedPreferences prefs;
@@ -74,6 +73,8 @@ public class ConfigManager {
                 .putLong(KEY_TODAY_TOTAL, 0)
                 .putBoolean(KEY_IS_LOCKED, false)
                 .putInt(KEY_CURRENT_CHILD_INDEX, 0)
+                .putLong(KEY_TODAY_RESET_TIME, System.currentTimeMillis())
+                .putLong(KEY_WEEK_START, System.currentTimeMillis())
                 .apply();
         }
     }
@@ -88,7 +89,7 @@ public class ConfigManager {
             // 默认孩子
             children.add(new ChildProfile("child_1", "宝宝"));
         } else {
-            // 简单解析（实际应用中应使用JSON）
+            // 简单解析
             String[] parts = childrenStr.split("\\|");
             for (int i = 0; i < parts.length; i += 2) {
                 if (i + 1 < parts.length) {
@@ -161,11 +162,13 @@ public class ConfigManager {
 
     public int getDailyLimit(String dayType) {
         ChildProfile child = getCurrentChild();
+        int baseLimit;
         if ("weekend".equals(dayType)) {
-            return child.getDailyLimitWeekend() + child.getBonusMinutes();
+            baseLimit = child.getDailyLimitWeekend();
         } else {
-            return child.getDailyLimitWorkday() + child.getBonusMinutes();
+            baseLimit = child.getDailyLimitWorkday();
         }
+        return baseLimit + child.getBonusMinutes();
     }
 
     public void setDailyLimit(int minutes, String dayType) {
@@ -242,7 +245,8 @@ public class ConfigManager {
 
     public long getTodayTotalSeconds() {
         checkDayReset();
-        return prefs.getLong(KEY_TODAY_TOTAL + "_" + getCurrentChild().getId(), 0);
+        String key = KEY_TODAY_TOTAL + "_" + getCurrentChild().getId();
+        return prefs.getLong(key, 0);
     }
 
     public void addTodayTotalSeconds(long seconds) {
@@ -252,7 +256,8 @@ public class ConfigManager {
     }
 
     public int getTodaySessionCount() {
-        return prefs.getInt(KEY_TODAY_SESSION_COUNT + "_" + getCurrentChild().getId(), 0);
+        String key = KEY_TODAY_SESSION_COUNT + "_" + getCurrentChild().getId();
+        return prefs.getInt(key, 0);
     }
 
     public void incrementSessionCount() {
@@ -262,7 +267,8 @@ public class ConfigManager {
     }
 
     public int getTodayRestCount() {
-        return prefs.getInt(KEY_TODAY_REST_COUNT + "_" + getCurrentChild().getId(), 0);
+        String key = KEY_TODAY_REST_COUNT + "_" + getCurrentChild().getId();
+        return prefs.getInt(key, 0);
     }
 
     public void incrementRestCount() {
@@ -275,7 +281,8 @@ public class ConfigManager {
 
     public long getWeekTotalSeconds() {
         checkWeekReset();
-        return prefs.getLong(KEY_WEEK_TOTAL + "_" + getCurrentChild().getId(), 0);
+        String key = KEY_WEEK_TOTAL + "_" + getCurrentChild().getId();
+        return prefs.getLong(key, 0);
     }
 
     public void addWeekTotalSeconds(long seconds) {
@@ -292,7 +299,8 @@ public class ConfigManager {
     }
 
     public int getWeekRewardUsed() {
-        return prefs.getInt(KEY_WEEK_REWARD_USED + "_" + getCurrentChild().getId(), 0);
+        String key = KEY_WEEK_REWARD_USED + "_" + getCurrentChild().getId();
+        return prefs.getInt(key, 0);
     }
 
     public void addWeekRewardUsed(int minutes) {
