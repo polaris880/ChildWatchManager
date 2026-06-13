@@ -3,11 +3,12 @@ package com.childwatch.manager;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PasswordDialog extends Dialog {
 
@@ -26,32 +27,42 @@ public class PasswordDialog extends Dialog {
     private int currentDigitValue = 0;
 
     public PasswordDialog(Context context, PasswordCallback callback) {
-        super(context);
+        super(context, R.style.DialogTheme);
         this.callback = callback;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 设置窗口属性
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_set_password);
 
-        // 设置窗口属性
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        getWindow().setAttributes(params);
+        // 设置窗口大小和位置
+        Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            params.gravity = Gravity.CENTER;
+            window.setAttributes(params);
 
-        // 禁用软键盘自动弹出
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            // 禁用软键盘
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        }
+
+        setCancelable(true);
+        setCanceledOnTouchOutside(false);
 
         initViews();
         setupListeners();
-        setupNavigation();
         updateDisplay();
 
         // 设置初始焦点
-        btnUp.requestFocus();
+        if (btnUp != null) {
+            btnUp.requestFocus();
+        }
     }
 
     private void initViews() {
@@ -72,151 +83,103 @@ public class PasswordDialog extends Dialog {
     }
 
     private void setupListeners() {
-        btnUp.setOnClickListener(v -> {
-            if (currentDigitValue < 9) {
-                currentDigitValue++;
-                tvCurrentDigit.setText(String.valueOf(currentDigitValue));
-            }
-        });
-
-        btnDown.setOnClickListener(v -> {
-            if (currentDigitValue > 0) {
-                currentDigitValue--;
-                tvCurrentDigit.setText(String.valueOf(currentDigitValue));
-            }
-        });
-
-        btnConfirm.setOnClickListener(v -> confirmCurrentDigit());
-
-        btnClear.setOnClickListener(v -> clearAll());
-    }
-
-    private void setupNavigation() {
-        // 上按钮 -> 数字显示
-        btnUp.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                    tvCurrentDigit.requestFocus();
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        // 数字显示 -> 下按钮 或 确认按钮
-        tvCurrentDigit.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnUp.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                    btnDown.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                    btnConfirm.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                    btnClear.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    // 确认键也可以增加数字
-                    if (currentDigitValue < 9) {
-                        currentDigitValue++;
+        // 增加按钮
+        if (btnUp != null) {
+            btnUp.setOnClickListener(v -> {
+                if (currentDigitValue < 9) {
+                    currentDigitValue++;
+                    if (tvCurrentDigit != null) {
                         tvCurrentDigit.setText(String.valueOf(currentDigitValue));
                     }
-                    return true;
                 }
-            }
-            return false;
-        });
+            });
+        }
 
-        // 下按钮 -> 确认按钮
-        btnDown.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    tvCurrentDigit.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                    btnConfirm.requestFocus();
-                    return true;
+        // 减少按钮
+        if (btnDown != null) {
+            btnDown.setOnClickListener(v -> {
+                if (currentDigitValue > 0) {
+                    currentDigitValue--;
+                    if (tvCurrentDigit != null) {
+                        tvCurrentDigit.setText(String.valueOf(currentDigitValue));
+                    }
                 }
-            }
-            return false;
-        });
+            });
+        }
 
-        // 确认按钮 -> 清除按钮
-        btnConfirm.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnDown.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                    btnClear.requestFocus();
-                    return true;
-                }
-            }
-            return false;
-        });
+        // 确认按钮
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> confirmCurrentDigit());
+        }
 
-        // 清除按钮 -> 上按钮
-        btnClear.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                    btnDown.requestFocus();
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                    btnConfirm.requestFocus();
-                    return true;
-                }
-            }
-            return false;
-        });
+        // 清除按钮
+        if (btnClear != null) {
+            btnClear.setOnClickListener(v -> clearAll());
+        }
     }
 
     private void confirmCurrentDigit() {
-        passwordDigits[currentDigitIndex] = currentDigitValue;
-        digitViews[currentDigitIndex].setText(String.valueOf(currentDigitValue));
+        if (currentDigitIndex >= 0 && currentDigitIndex < 6) {
+            passwordDigits[currentDigitIndex] = currentDigitValue;
 
-        if (currentDigitIndex < 5) {
-            currentDigitIndex++;
-            currentDigitValue = 0;
-            tvCurrentDigit.setText("0");
-            tvHint.setText("请设置第" + (currentDigitIndex + 1) + "位密码");
-        } else {
-            // 密码设置完成
-            StringBuilder password = new StringBuilder();
-            for (int digit : passwordDigits) {
-                password.append(digit);
+            if (digitViews[currentDigitIndex] != null) {
+                digitViews[currentDigitIndex].setText(String.valueOf(currentDigitValue));
             }
-            if (callback != null) {
-                callback.onPasswordSet(password.toString());
+
+            if (currentDigitIndex < 5) {
+                // 还有位数需要设置
+                currentDigitIndex++;
+                currentDigitValue = 0;
+
+                if (tvCurrentDigit != null) {
+                    tvCurrentDigit.setText("0");
+                }
+
+                updateDisplay();
+            } else {
+                // 所有位数设置完成
+                StringBuilder password = new StringBuilder();
+                for (int digit : passwordDigits) {
+                    password.append(digit);
+                }
+
+                String passwordStr = password.toString();
+
+                // 回调
+                if (callback != null) {
+                    callback.onPasswordSet(passwordStr);
+                }
+
+                // 关闭对话框
+                dismiss();
             }
-            dismiss();
         }
     }
 
     private void clearAll() {
         currentDigitIndex = 0;
         currentDigitValue = 0;
-        for (TextView digitView : digitViews) {
-            digitView.setText("-");
+
+        for (int i = 0; i < digitViews.length; i++) {
+            if (digitViews[i] != null) {
+                digitViews[i].setText("-");
+            }
         }
-        tvCurrentDigit.setText("0");
-        tvHint.setText("请设置第1位密码");
-        btnUp.requestFocus();
+
+        if (tvCurrentDigit != null) {
+            tvCurrentDigit.setText("0");
+        }
+
+        updateDisplay();
+
+        if (btnUp != null) {
+            btnUp.requestFocus();
+        }
     }
 
     private void updateDisplay() {
-        tvHint.setText("请设置第" + (currentDigitIndex + 1) + "位密码");
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // 处理遥控器按键
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            dismiss();
-            return true;
+        if (tvHint != null) {
+            tvHint.setText("第" + (currentDigitIndex + 1) + "位");
         }
-        return super.onKeyDown(keyCode, event);
     }
 }
