@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🎁 奖励时间"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="完成任务可以获得额外观看时间"
+            android:textSize="20sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 奖励选项列表 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="24dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📖 完成作业"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+30分钟"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent"
+                    android:layout_marginEnd="16dp" />
+
+                <Button
+                    android:id="@+id/btn_reward_homework"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="领取"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/accent"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/text_secondary"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🏃 户外运动"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+20分钟"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent"
+                    android:layout_marginEnd="16dp" />
+
+                <Button
+                    android:id="@+id/btn_reward_exercise"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="领取"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/accent"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/text_secondary"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🧹 做家务"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+15分钟"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent"
+                    android:layout_marginEnd="16dp" />
+
+                <Button
+                    android:id="@+id/btn_reward_chores"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="领取"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/accent"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/text_secondary"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📚 阅读绘本"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+20分钟"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent"
+                    android:layout_marginEnd="16dp" />
+
+                <Button
+                    android:id="@+id/btn_reward_reading"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:text="领取"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/accent"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 今日奖励统计 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="24dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="今日奖励统计"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/tv_reward_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已获得奖励: +0 分钟"
+                android:textSize="22sp"
+                android:textColor="@color/accent" />
+
+        </LinearLayout>
+
+        <!-- 返回按钮 -->
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="返回主界面"
+            android:textSize="22sp"
+            android:backgroundTint="@color/primary"
+            android:focusable="true" />
+
+        <!-- 提示 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="奖励由家长确认发放"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

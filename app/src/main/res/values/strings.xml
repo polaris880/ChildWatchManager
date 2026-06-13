@@ -10,4 +10,9 @@
     <string name="start_monitoring">启动监控</string>
     <string name="stop_monitoring">停止监控</string>
     <string name="change_password">修改密码</string>
+    <string name="reward">奖励</string>
+    <string name="report">报告</string>
+    <string name="back">返回</string>
+    <string name="previous">上一个</string>
+    <string name="next">下一个</string>
 </resources>

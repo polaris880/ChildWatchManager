@@ -40,6 +40,16 @@
             android:name=".SettingsActivity"
             android:screenOrientation="landscape" />
 
+        <!-- 奖励Activity -->
+        <activity
+            android:name=".RewardActivity"
+            android:screenOrientation="landscape" />
+
+        <!-- 报告Activity -->
+        <activity
+            android:name=".ReportActivity"
+            android:screenOrientation="landscape" />
+
         <!-- 锁屏Activity -->
         <activity
             android:name=".LockActivity"

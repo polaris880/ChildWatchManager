@@ -16,7 +16,49 @@
         android:textStyle="bold"
         android:textColor="@color/text_primary"
         android:gravity="center"
-        android:layout_marginBottom="48dp" />
+        android:layout_marginBottom="16dp" />
+
+    <!-- 孩子选择区域 -->
+    <LinearLayout
+        android:id="@+id/layout_child_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/card_background"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_prev_child"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="◀"
+            android:textSize="24sp"
+            android:backgroundTint="@color/secondary"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/tv_child_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="宝宝"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/btn_next_child"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="▶"
+            android:textSize="24sp"
+            android:backgroundTint="@color/secondary"
+            android:focusable="true" />
+
+    </LinearLayout>
 
     <!-- 状态显示区域 -->
     <LinearLayout
@@ -24,48 +66,125 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/card_background"
-        android:padding="32dp"
-        android:layout_marginBottom="48dp">
+        android:padding="24dp"
+        android:layout_marginBottom="24dp">
 
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="● 监控中"
-            android:textSize="24sp"
-            android:textColor="@color/accent"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:id="@+id/tv_today_total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="今日已观看: 00:00:00"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="20dp" />
-
-        <TextView
-            android:id="@+id/tv_session_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="当前会话: 00:00:00"
             android:textSize="22sp"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/accent"
             android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/tv_remaining_time"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="剩余时间: 00:00:00"
-            android:textSize="24sp"
-            android:textColor="@color/primary" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="今日已看"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_today_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="00:30:00"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="剩余时间"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_remaining_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="01:30:00"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 进度条 -->
+        <ProgressBar
+            android:id="@+id/progress_time"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_marginTop="16dp"
+            android:max="100"
+            android:progress="25"
+            android:progressTint="@color/primary"
+            android:progressBackgroundTint="@color/surface" />
+
+        <TextView
+            android:id="@+id/tv_progress_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已使用 25%"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 
-    <!-- 操作按钮区域 - 遥控器友好设计 -->
+    <!-- 当前会话信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/card_background"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="当前会话"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:id="@+id/tv_session_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:15:00"
+            android:textSize="20sp"
+            android:textColor="@color/text_primary" />
+
+    </LinearLayout>
+
+    <!-- 操作按钮区域 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,28 +194,45 @@
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:text="⚙ 设置"
-            android:textSize="24sp"
-            android:layout_marginEnd="16dp"
+            android:textSize="20sp"
             android:backgroundTint="@color/primary"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:nextFocusRight="@id/btn_start_stop" />
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_reward"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="🎁 奖励"
+            android:textSize="20sp"
+            android:backgroundTint="@color/accent"
+            android:focusable="true"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_report"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="📊 报告"
+            android:textSize="20sp"
+            android:backgroundTint="@color/secondary"
+            android:focusable="true"
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btn_start_stop"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:text="⏹ 停止监控"
-            android:textSize="24sp"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="@color/accent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:nextFocusLeft="@id/btn_settings" />
+            android:text="⏹ 停止"
+            android:textSize="20sp"
+            android:backgroundTint="@color/error"
+            android:focusable="true" />
 
     </LinearLayout>
 
@@ -104,10 +240,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="使用遥控器方向键导航，确认键选择"
-        android:textSize="16sp"
+        android:text="← → 切换按钮  |  确认键选择"
+        android:textSize="14sp"
         android:textColor="@color/text_secondary"
         android:gravity="center"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>
