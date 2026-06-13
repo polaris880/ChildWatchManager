@@ -126,18 +126,11 @@ public class TimeManager {
         return configManager.getIntervalRest() * 60;
     }
 
-    // 检查日期重置
+    // 检查日期重置 - 由ConfigManager内部处理
     private void checkDayReset() {
-        long lastResetTime = configManager.getTodayResetTime();
-        Calendar lastReset = Calendar.getInstance();
-        lastReset.setTimeInMillis(lastResetTime);
-
-        Calendar now = Calendar.getInstance();
-
-        if (now.get(Calendar.DAY_OF_YEAR) != lastReset.get(Calendar.DAY_OF_YEAR) ||
-            now.get(Calendar.YEAR) != lastReset.get(Calendar.YEAR)) {
-            configManager.resetTodayTimer();
-        }
+        // ConfigManager会在获取今日数据时自动检查并重置
+        // 这里只需确保调用一次以触发检查
+        configManager.getTodayTotalSeconds();
     }
 
     // 获取日期类型

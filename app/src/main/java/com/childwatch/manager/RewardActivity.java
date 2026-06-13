@@ -69,8 +69,8 @@ public class RewardActivity extends AppCompatActivity {
         }
 
         configManager.claimReward(type, minutes);
-        configManager.addBonusMinutes(minutes);
-        totalRewardMinutes += minutes;
+        // claimReward 内部已调用 addBonusMinutes，无需重复调用
+        totalRewardMinutes = configManager.getTodayRewardMinutes();
 
         updateRewardDisplay();
         Toast.makeText(this, "奖励 +" + minutes + " 分钟已领取！", Toast.LENGTH_SHORT).show();
