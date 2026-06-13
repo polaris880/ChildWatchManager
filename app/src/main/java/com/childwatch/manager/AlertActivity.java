@@ -3,6 +3,7 @@ package com.childwatch.manager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -31,6 +32,9 @@ public class AlertActivity extends AppCompatActivity {
         btnDismiss = findViewById(R.id.btn_dismiss);
 
         btnDismiss.setOnClickListener(v -> finish());
+
+        // 初始焦点
+        btnDismiss.requestFocus();
     }
 
     private void loadMessage() {
@@ -45,7 +49,13 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        // 禁用返回键
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 按任意键关闭
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ENTER ||
+            keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

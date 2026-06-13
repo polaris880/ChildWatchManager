@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         checkPasswordSetup();
         startService();
         startUIUpdate();
+
+        // 设置初始焦点
+        btnSettings.requestFocus();
     }
 
     private void initViews() {
@@ -55,6 +58,27 @@ public class MainActivity extends AppCompatActivity {
 
         btnSettings.setOnClickListener(v -> openSettings());
         btnStartStop.setOnClickListener(v -> toggleService());
+
+        // 遥控器导航支持
+        btnSettings.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    btnStartStop.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        btnStartStop.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    btnSettings.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     private void checkPasswordSetup() {
@@ -88,11 +112,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateServiceButton() {
         if (isServiceRunning) {
-            btnStartStop.setText("停止监控");
-            tvStatus.setText("监控中");
+            btnStartStop.setText("⏹ 停止监控");
+            tvStatus.setText("● 监控中");
+            tvStatus.setTextColor(getResources().getColor(R.color.accent));
         } else {
-            btnStartStop.setText("启动监控");
-            tvStatus.setText("已停止");
+            btnStartStop.setText("▶ 启动监控");
+            tvStatus.setText("● 已停止");
+            tvStatus.setTextColor(getResources().getColor(R.color.error));
         }
     }
 
@@ -121,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
         tvRemainingTime.setText("剩余时间: " + TimeManager.formatTime(remaining));
 
         if (configManager.isLocked()) {
-            tvStatus.setText("已锁定");
-        } else if (timeManager.isSessionActive()) {
-            tvStatus.setText("观看中");
+            tvStatus.setText("● 已锁定");
+            tvStatus.setTextColor(getResources().getColor(R.color.error));
         }
     }
 
@@ -131,5 +156,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 支持遥控器返回键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 不退出APP，保持后台运行
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

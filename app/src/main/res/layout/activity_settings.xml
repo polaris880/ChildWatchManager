@@ -2,173 +2,372 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="32dp">
 
         <!-- 标题 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设置"
-            android:textSize="24sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="40dp" />
 
         <!-- 每日时长设置 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="每日时长限制（分钟）"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="20dp" />
 
+        <!-- 工作日 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="工作日:"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textColor="@color/text_secondary" />
 
-            <EditText
-                android:id="@+id/et_daily_workday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:hint="120"
-                android:textSize="16sp"
+            <Button
+                android:id="@+id/btn_workday_minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusRight="@id/tv_workday_value" />
+
+            <TextView
+                android:id="@+id/tv_workday_value"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="120"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_workday_minus"
+                android:nextFocusRight="@id/btn_workday_plus" />
+
+            <Button
+                android:id="@+id/btn_workday_plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tv_workday_value" />
 
         </LinearLayout>
 
+        <!-- 周末 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="周末:"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textColor="@color/text_secondary" />
 
-            <EditText
-                android:id="@+id/et_daily_weekend"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:hint="180"
-                android:textSize="16sp"
+            <Button
+                android:id="@+id/btn_weekend_minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusRight="@id/tv_weekend_value" />
+
+            <TextView
+                android:id="@+id/tv_weekend_value"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="180"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_weekend_minus"
+                android:nextFocusRight="@id/btn_weekend_plus" />
+
+            <Button
+                android:id="@+id/btn_weekend_plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tv_weekend_value" />
 
         </LinearLayout>
+
+        <!-- 分隔线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/text_secondary"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 单次时长设置 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="单次连续观看（分钟）"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="节假日:"
-                android:textSize="16sp"
+                android:text="单次限制:"
+                android:textSize="20sp"
                 android:textColor="@color/text_secondary" />
 
-            <EditText
-                android:id="@+id/et_daily_holiday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:hint="180"
-                android:textSize="16sp"
+            <Button
+                android:id="@+id/btn_single_minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusRight="@id/tv_single_value" />
+
+            <TextView
+                android:id="@+id/tv_single_value"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="30"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_single_minus"
+                android:nextFocusRight="@id/btn_single_plus" />
+
+            <Button
+                android:id="@+id/btn_single_plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tv_single_value" />
 
         </LinearLayout>
 
-        <!-- 单次时长设置 -->
-        <TextView
+        <!-- 分隔线 -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="单次连续观看限制（分钟）"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_height="2dp"
+            android:background="@color/text_secondary"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp" />
 
-        <EditText
-            android:id="@+id/et_single_limit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="30"
-            android:textSize="16sp"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 间隔时长设置 -->
+        <!-- 间隔休息设置 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="间隔休息设置（分钟）"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="20dp" />
 
+        <!-- 观看间隔 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="观看间隔:"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textColor="@color/text_secondary" />
 
-            <EditText
-                android:id="@+id/et_interval_watch"
+            <Button
+                android:id="@+id/btn_interval_watch_minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusRight="@id/tv_interval_watch_value" />
+
+            <TextView
+                android:id="@+id/tv_interval_watch_value"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="30"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
+                android:background="@drawable/edit_text_background"
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_interval_watch_minus"
+                android:nextFocusRight="@id/btn_interval_watch_plus" />
+
+            <Button
+                android:id="@+id/btn_interval_watch_plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tv_interval_watch_value" />
+
+        </LinearLayout>
+
+        <!-- 休息时长 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number"
-                android:hint="30"
-                android:textSize="16sp"
+                android:text="休息时长:"
+                android:textSize="20sp"
+                android:textColor="@color/text_secondary" />
+
+            <Button
+                android:id="@+id/btn_interval_rest_minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="-"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusRight="@id/tv_interval_rest_value" />
+
+            <TextView
+                android:id="@+id/tv_interval_rest_value"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:text="5"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
                 android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_interval_rest_minus"
+                android:nextFocusRight="@id/btn_interval_rest_plus" />
+
+            <Button
+                android:id="@+id/btn_interval_rest_plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="+"
+                android:textSize="28sp"
+                android:backgroundTint="@color/secondary"
+                android:focusable="true"
+                android:nextFocusLeft="@id/tv_interval_rest_value" />
+
+        </LinearLayout>
+
+        <!-- 分隔线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/text_secondary"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 系统设置 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="系统设置"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="开机自启动"
+                android:textSize="20sp"
+                android:textColor="@color/text_secondary" />
+
+            <Switch
+                android:id="@+id/switch_auto_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:focusable="true"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -176,80 +375,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="休息时长:"
-                android:textSize="16sp"
+                android:text="启用监控"
+                android:textSize="20sp"
                 android:textColor="@color/text_secondary" />
 
-            <EditText
-                android:id="@+id/et_interval_rest"
-                android:layout_width="0dp"
+            <Switch
+                android:id="@+id/switch_monitoring"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:hint="5"
-                android:textSize="16sp"
-                android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
+                android:checked="true"
+                android:focusable="true"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <!-- 系统设置 -->
+        <!-- 按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/btn_change_password"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="修改密码"
+                android:textSize="20sp"
+                android:backgroundTint="@color/secondary"
+                android:layout_marginEnd="12dp"
+                android:focusable="true"
+                android:nextFocusRight="@id/btn_save" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="保存设置"
+                android:textSize="20sp"
+                android:backgroundTint="@color/primary"
+                android:layout_marginStart="12dp"
+                android:focusable="true"
+                android:nextFocusLeft="@id/btn_change_password" />
+
+        </LinearLayout>
+
+        <!-- 底部提示 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="系统设置"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp" />
-
-        <Switch
-            android:id="@+id/switch_auto_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="开机自启动"
+            android:text="使用遥控器上下键选择，左右键调整数值"
             android:textSize="16sp"
             android:textColor="@color/text_secondary"
-            android:layout_marginBottom="8dp"
-            android:checked="true" />
-
-        <Switch
-            android:id="@+id/switch_monitoring"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="启用监控"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="16dp"
-            android:checked="true" />
-
-        <!-- 密码管理 -->
-        <Button
-            android:id="@+id/btn_change_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="修改密码"
-            android:textSize="16sp"
-            android:backgroundTint="@color/secondary"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 保存按钮 -->
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="保存设置"
-            android:textSize="18sp"
-            android:backgroundTint="@color/primary"
-            android:layout_marginTop="8dp" />
+            android:gravity="center" />
 
     </LinearLayout>
 
