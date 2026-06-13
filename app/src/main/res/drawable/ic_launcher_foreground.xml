@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108"
+    android:tint="#FFFFFF">
+
+    <!-- 时钟圆圈 -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M54,20C35.2,20 20,35.2 20,54s15.2,34 34,34 34,-15.2 34,-34S72.8,20 54,20zM54,68c-7.7,0 -14,-6.3 -14,-14s6.3,-14 14,-14 14,6.3 14,14 -6.3,14 -14,14z"/>
+
+    <!-- 时针 -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M52,38L54,54L62,58"/>
+
+    <!-- 分针 -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M54,54L54,42"
+        android:strokeWidth="3"
+        android:strokeColor="@android:color/white"/>
+
+    <!-- 中心点 -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M54,54m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"/>
+</vector>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#6200EE"/>
+            <size android:width="108dp" android:height="108dp"/>
+        </shape>
+    </item>
+    <!-- 时钟图标 -->
+    <item
+        android:left="25dp"
+        android:top="25dp"
+        android:right="25dp"
+        android:bottom="25dp">
+        <vector
+            android:width="58dp"
+            android:height="58dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+            <!-- 时钟圆圈 -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M54,20C35.2,20 20,35.2 20,54s15.2,34 34,34 34,-15.2 34,-34S72.8,20 54,20zM54,68c-7.7,0 -14,-6.3 -14,-14s6.3,-14 14,-14 14,6.3 14,14 -6.3,14 -14,14z"/>
+            <!-- 时针 -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M54,54L54,42"
+                android:strokeWidth="4"
+                android:strokeColor="#FFFFFF"/>
+            <!-- 分针 -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M54,54L62,58"
+                android:strokeWidth="4"
+                android:strokeColor="#FFFFFF"/>
+            <!-- 中心点 -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M54,54m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+        </vector>
+    </item>
+</layer-list>
