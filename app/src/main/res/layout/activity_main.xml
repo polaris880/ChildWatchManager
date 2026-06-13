@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="儿童观看时长管理"
+        android:text="儿童锁"
         android:textSize="36sp"
         android:textStyle="bold"
         android:textColor="@color/text_primary"

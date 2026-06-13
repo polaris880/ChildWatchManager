@@ -1,97 +1,99 @@
-# 🚀 快速开始 - 5分钟完成部署
+# 🚀 快速开始 - 儿童锁 v1.1.0
 
-您已准备好所有文件！现在只需3步：
+## ✅ 已完成的优化
 
----
-
-## 第1步：创建新仓库
-
-**访问**：https://github.com/new
-
-填写：
-- **Repository name**: `ChildWatchManager`
-- **选择 Public**（必须！否则Actions有限制）
-- **不要勾选** 任何初始化选项
-- 点击 **Create repository**
+1. **APP名称**：儿童观看时长管理 → **儿童锁**
+2. **遥控器优化**：全面支持遥控器操作
+3. **深色主题**：适合电视观看
+4. **数字选择器**：无需键盘输入密码
+5. **大按钮设计**：方便遥控器选择
+6. **解决"解析中"**：修复图标显示问题
 
 ---
 
-## 第2步：上传文件
-
-### 方法A：网页拖拽上传（最简单）⭐
-
-1. 创建仓库后，会显示 "uploading an existing repository" 链接
-2. 点击该链接（或直接访问仓库页面的 "Add file" → "Upload files"）
-3. 打开文件资源管理器，进入：
-   ```
-   D:\ai\APK\ChildWatchManager
-   ```
-4. **全选所有文件**（Ctrl+A）
-5. **拖拽到网页中央的虚线框区域**
-6. 等待上传（约1-2分钟）
-7. 点击 **Commit changes**
-
-### 方法B：Git命令（如果您熟悉Git）
+## 📦 提交代码
 
 ```powershell
 cd D:\ai\APK\ChildWatchManager
-git init
 git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/ChildWatchManager.git
-git branch -M main
-git push -u origin main
+git commit -m "v1.1.0: 优化遥控器支持，改名儿童锁"
+git push
 ```
 
 ---
 
-## 第3步：下载APK
+## ⏱️ 构建时间
 
-1. 访问仓库的 **Actions** 页面
-2. 等待构建完成（5-10分钟，显示绿色 ✓）
-3. 点击完成的构建
-4. 在 **Artifacts** 部分下载 "ChildWatchManager-debug"
-5. 解压ZIP得到APK
+- **构建时长**：5-10分钟
+- **APK大小**：约2-5MB
+- **版本号**：1.1.0
 
 ---
 
 ## 📲 安装到当贝盒子
 
+### 重要：先卸载旧版本！
+
 ```bash
-# 开启ADB调试后
-adb connect <当贝盒子IP>:5555
+# 1. 卸载旧版本（解决"解析中"图标）
+adb uninstall com.childwatch.manager
+
+# 2. 重启当贝盒子（可选，但建议）
+adb reboot
+
+# 3. 等待重启完成
+
+# 4. 安装新版本
 adb install app-debug.apk
+
+# 5. 启动
+adb shell am start -n com.childwatch.manager/.MainActivity
 ```
 
 ---
 
-## ✅ 您的项目已包含
+## 🎮 遥控器操作速查
 
-✅ 完整的Android源代码（8个Java文件）
-✅ 所有界面布局和资源文件
-✅ GitHub Actions自动构建配置
-✅ 正确的Gradle和Android版本配置
-✅ README和说明文档
-
----
-
-## 🔧 版本配置（已优化）
-
-| 组件 | 版本 |
+### 主界面
+| 按键 | 功能 |
 |------|------|
-| Java | 17 |
-| Gradle | 8.0 |
-| Android Gradle Plugin | 8.1.0 |
-| Android SDK | 33 |
+| ← → | 切换按钮 |
+| 确认 | 执行操作 |
+| 返回 | 最小化APP |
+
+### 设置界面
+| 按键 | 功能 |
+|------|------|
+| ↑ ↓ | 选择项目 |
+| ← → | 调整数值 |
+| 确认 | 点击按钮 |
+
+### 密码输入
+| 按键 | 功能 |
+|------|------|
+| ↑ | 数字+1 |
+| ↓ | 数字-1 |
+| 确认 | 确认当前位 |
 
 ---
 
-## ❓ 遇到问题？
+## 🎯 首次使用
 
-1. **构建失败**：检查Actions页面的错误日志
-2. **上传失败**：确保网络连接正常，重试
-3. **安装失败**：开启当贝盒子的"允许未知来源"
+1. **启动APP** → 显示主界面
+2. **点击设置** → 自动提示设置密码
+3. **设置6位数字密码**（使用数字选择器）
+4. **配置观看时长**
+5. **保存设置**
 
 ---
 
-**一切就绪！开始上传吧！** 🎉
+## 💡 提示
+
+- **深色主题**更适合电视观看
+- **大字体**方便客厅观看
+- **数字选择器**避免遥控器输入困难
+- **横屏模式**充分利用电视屏幕
+
+---
+
+**儿童锁 v1.1.0 - 遥控器优化版** 🎮✨

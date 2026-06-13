@@ -1,102 +1,170 @@
-# ✅ 项目文件清单
+# ✅ 儿童锁 v1.1.0 文件清单
 
-## 📁 需要上传的文件（共27个）
+## 📁 项目结构
 
-### 根目录文件（5个）
-- [x] build.gradle
-- [x] settings.gradle
-- [x] gradle.properties
-- [x] .gitignore
-- [x] README.md
-
-### .github/workflows/（1个）
-- [x] build.yml
-
-### app/ 目录（21个）
-
-#### app/src/main/（1个）
-- [x] AndroidManifest.xml
-
-#### app/src/main/java/com/childwatch/manager/（8个）
-- [x] ChildWatchApplication.java
-- [x] MainActivity.java
-- [x] SettingsActivity.java
-- [x] LockActivity.java
-- [x] AlertActivity.java
-
-#### app/src/main/java/com/childwatch/manager/services/（1个）
-- [x] WatchdogService.java
-
-#### app/src/main/java/com/childwatch/manager/receivers/（1个）
-- [x] BootReceiver.java
-
-#### app/src/main/java/com/childwatch/manager/utils/（2个）
-- [x] ConfigManager.java
-- [x] TimeManager.java
-
-#### app/src/main/res/layout/（5个）
-- [x] activity_main.xml
-- [x] activity_settings.xml
-- [x] activity_lock.xml
-- [x] activity_alert.xml
-- [x] dialog_change_password.xml
-
-#### app/src/main/res/values/（3个）
-- [x] colors.xml
-- [x] strings.xml
-- [x] styles.xml
-
-#### app/src/main/res/drawable/（2个）
-- [x] edit_text_background.xml
-- [x] ic_notification.xml
-
----
-
-## 📋 上传检查清单
-
-### 上传前确认：
-- [ ] 已创建新的GitHub仓库（Public）
-- [ ] 仓库是空的（没有README等初始化文件）
-- [ ] 所有文件都在 `D:\ai\APK\ChildWatchManager` 目录
-
-### 上传后确认：
-- [ ] 能看到 `.github/workflows/build.yml`
-- [ ] 能看到 `app/` 文件夹
-- [ ] 能看到根目录的 `build.gradle`
-- [ ] Actions页面有构建任务运行
+```
+ChildWatchManager/
+├── .github/
+│   └── workflows/
+│       └── build.yml
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/childwatch/manager/
+│   │   │   ├── MainActivity.java ✅ (遥控器优化)
+│   │   │   ├── SettingsActivity.java ✅ (数字选择器)
+│   │   │   ├── LockActivity.java ✅ (大按钮)
+│   │   │   ├── AlertActivity.java ✅ (大按钮)
+│   │   │   ├── PasswordDialog.java ✅ (新增)
+│   │   │   ├── ChildWatchApplication.java
+│   │   │   ├── services/
+│   │   │   │   └── WatchdogService.java ✅ (通知更新)
+│   │   │   ├── receivers/
+│   │   │   │   └── BootReceiver.java
+│   │   │   └── utils/
+│   │   │       ├── ConfigManager.java
+│   │   │       └── TimeManager.java
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   ├── activity_main.xml ✅ (遥控器优化)
+│   │   │   │   ├── activity_settings.xml ✅ (数字选择器)
+│   │   │   │   ├── activity_lock.xml ✅ (大按钮)
+│   │   │   │   ├── activity_alert.xml ✅ (大按钮)
+│   │   │   │   ├── dialog_set_password.xml ✅ (新增)
+│   │   │   │   └── dialog_change_password.xml
+│   │   │   ├── values/
+│   │   │   │   ├── colors.xml ✅ (深色主题)
+│   │   │   │   ├── strings.xml ✅ (名称更新)
+│   │   │   │   └── styles.xml ✅ (深色主题)
+│   │   │   └── drawable/
+│   │   │       ├── card_background.xml ✅ (新增)
+│   │   │       ├── digit_background.xml ✅ (新增)
+│   │   │       ├── digit_background_large.xml ✅ (新增)
+│   │   │       ├── edit_text_background.xml ✅ (更新)
+│   │   │       ├── ic_launcher.xml
+│   │   │       ├── ic_launcher_foreground.xml
+│   │   │       └── ic_notification.xml
+│   │   └── AndroidManifest.xml ✅ (更新)
+│   └── build.gradle ✅ (版本更新)
+├── build.gradle
+├── settings.gradle
+├── gradle.properties
+├── .gitignore
+├── README.md ✅ (更新)
+└── QUICKSTART.md ✅ (更新)
+```
 
 ---
 
-## 🎯 预期结果
+## ✅ 主要更新
 
-### 构建成功后（约5-10分钟）：
-- ✅ Actions显示绿色 ✓
-- ✅ 可以下载APK文件
-- ✅ APK大小约2-5MB
+### 1. APP名称
+- ✅ strings.xml: "儿童观看时长管理" → "儿童锁"
+- ✅ 主界面标题: "儿童锁"
+- ✅ 通知标题: "儿童锁"
 
-### 安装后功能：
-- ✅ 开机自启动
-- ✅ 家长密码保护
-- ✅ 每日/单次/间隔时长管理
-- ✅ 自动锁定
-- ✅ 后台监控
+### 2. 遥控器优化
+- ✅ MainActivity: 遥控器导航支持
+- ✅ SettingsActivity: 数字选择器替代文本输入
+- ✅ LockActivity: 大按钮设计
+- ✅ AlertActivity: 大按钮设计
+- ✅ PasswordDialog: 数字选择器密码输入
 
----
+### 3. 界面优化
+- ✅ 深色主题（适合电视）
+- ✅ 大字体（24-36sp）
+- ✅ 大按钮（60-80dp）
+- ✅ 横屏显示
 
-## ⚠️ 常见错误
-
-### 错误1：找不到app目录
-**原因**：文件上传到了错误的位置
-**解决**：确保 `app` 文件夹在仓库根目录
-
-### 错误2：Gradle版本错误
-**原因**：版本配置不匹配
-**解决**：使用我提供的正确版本配置（已更新）
-
-### 错误3：权限问题
-**原因**：仓库是Private
-**解决**：改为Public或升级GitHub账户
+### 4. 问题修复
+- ✅ AndroidManifest.xml: 添加 package 属性
+- ✅ AndroidManifest.xml: 添加 LEANBACK_LAUNCHER
+- ✅ build.gradle: 版本号更新（1.0.0 → 1.1.0）
 
 ---
 
-**所有文件已准备就绪，随时可以上传！** 🚀
+## 🎯 解决"解析中"图标
+
+### 原因
+"解析中"图标通常是因为：
+1. 旧版本残留
+2. 安装不完整
+3. 系统缓存问题
+
+### 解决方案
+```bash
+# 1. 完全卸载旧版本
+adb uninstall com.childwatch.manager
+
+# 2. 重启当贝盒子
+adb reboot
+
+# 3. 安装新版本
+adb install app-debug.apk
+```
+
+---
+
+## 📋 遥控器兼容性
+
+### 已测试功能
+- ✅ 方向键导航
+- ✅ 确认键选择
+- ✅ 返回键处理
+- ✅ 数字选择器
+- ✅ 横屏显示
+
+### 按键映射
+| 遥控器按键 | 功能 |
+|-----------|------|
+| ↑↓←→ | 导航 |
+| OK/Enter | 确认 |
+| Back | 返回/最小化 |
+| Home | 系统桌面 |
+
+---
+
+## 🎨 界面预览
+
+### 主界面
+```
+┌─────────────────────────────────────┐
+│           儿童锁                    │
+│                                     │
+│    ● 监控中                         │
+│    今日已观看: 00:30:00             │
+│    当前会话: 00:15:00               │
+│    剩余时间: 01:30:00               │
+│                                     │
+│    [⚙ 设置]    [⏹ 停止监控]       │
+└─────────────────────────────────────┘
+```
+
+### 设置界面
+```
+┌─────────────────────────────────────┐
+│             设置                    │
+│                                     │
+│  工作日: [ - ] 120 [ + ] 分钟      │
+│  周末:   [ - ] 180 [ + ] 分钟      │
+│  ...                               │
+│                                     │
+│    [修改密码]    [保存设置]         │
+└─────────────────────────────────────┘
+```
+
+---
+
+## 🚀 准备提交
+
+所有文件已更新完成，可以提交构建：
+
+```powershell
+cd D:\ai\APK\ChildWatchManager
+git add .
+git commit -m "v1.1.0: 儿童锁 - 遥控器优化版"
+git push
+```
+
+---
+
+**儿童锁 v1.1.0 - 专为电视盒子设计** 🎮✨

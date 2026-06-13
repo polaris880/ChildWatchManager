@@ -85,7 +85,7 @@ public class WatchdogService extends Service implements TimeManager.TimeListener
         );
 
         Notification notification = new NotificationCompat.Builder(this, ChildWatchApplication.CHANNEL_ID)
-                .setContentTitle("儿童观看时长管理")
+                .setContentTitle("儿童锁")
                 .setContentText("监控服务运行中")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
