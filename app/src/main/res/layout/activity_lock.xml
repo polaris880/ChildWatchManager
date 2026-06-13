@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="@color/background"
+    android:gravity="center">
+
+    <!-- 锁定图标 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔒"
+        android:textSize="64sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 锁定消息 -->
+    <TextView
+        android:id="@+id/tv_lock_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="观看时间已到，请输入家长密码解锁"
+        android:textSize="18sp"
+        android:textColor="@color/text_primary"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 今日已观看 -->
+    <TextView
+        android:id="@+id/tv_today_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="今日已观看: 00:00:00"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 密码输入框 -->
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:maxLength="6"
+        android:hint="请输入6位密码"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/edit_text_background"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 解锁按钮 -->
+    <Button
+        android:id="@+id/btn_unlock"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="解 锁"
+        android:textSize="18sp"
+        android:backgroundTint="@color/primary" />
+
+</LinearLayout>
