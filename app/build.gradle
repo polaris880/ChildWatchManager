@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'com.childwatch.manager'
     compileSdk 33
     buildToolsVersion "33.0.2"
 
